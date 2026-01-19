@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Access Initiatives | Full Academic Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@200;300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #d4af37;
+            --midnight: #0a0e14;
+            --slate: #161b22;
+            --glass-border: 1px solid rgba(212, 175, 55, 0.3);
+            --text-main: #e0e0e0;
+            --serif: 'Playfair Display', serif;
+            --sans: 'Montserrat', sans-serif;
+            --sidebar-width: 320px;
+        }
+
+        * { box-sizing: border-box; }
+        body, html {
+            margin: 0; padding: 0;
+            font-family: var(--sans);
+            background-color: var(--midnight);
+            color: var(--text-main);
+            display: flex;
+            scroll-behavior: smooth;
+        }
+
+        /* --- SIDEBAR --- */
+        nav {
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: var(--slate);
+            color: white;
+            position: fixed;
+            padding: 30px 20px;
+            overflow-y: auto;
+            z-index: 1000;
+            border-right: var(--glass-border);
+        }
+
+        nav h2 { 
+            font-family: var(--serif); 
+            font-size: 1.2rem; 
+            color: var(--gold);
+            border-bottom: 1px solid var(--gold); 
+            padding-bottom: 15px; 
+            margin-bottom: 30px; 
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .nav-group { margin-bottom: 30px; }
+        .nav-group-title { 
+            font-weight: 700; 
+            color: var(--gold); 
+            font-size: 0.7rem; 
+            margin-bottom: 12px; 
+            display: block; 
+            letter-spacing: 3px;
+            opacity: 0.7;
+        }
+
+        nav a {
+            display: block;
+            color: #ccc;
+            text-decoration: none;
+            padding: 12px 15px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+            transition: 0.3s;
+            cursor: pointer;
+            border-left: 2px solid transparent;
+        }
+
+        nav a:hover, nav a.active { 
+            background: rgba(212, 175, 55, 0.1); 
+            color: var(--gold); 
+            border-left: 2px solid var(--gold);
+        }
+
+        /* --- MAIN CONTENT --- */
+        main {
+            margin-left: var(--sidebar-width);
+            width: calc(100% - var(--sidebar-width));
+            min-height: 100vh;
+            background-image: linear-gradient(rgba(10, 14, 20, 0.85), rgba(10, 14, 20, 0.85)), 
+                              url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=2000&auto=format&fit=crop');
+            background-attachment: fixed;
+            background-size: cover;
+            padding: 60px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .content-card {
+            background: rgba(22, 27, 34, 0.8);
+            backdrop-filter: blur(15px);
+            padding: 60px;
+            border-radius: 4px;
+            border: var(--glass-border);
+            width: 100%;
+            max-width: 1000px;
+            display: none;
+            line-height: 1.8;
+            animation: fadeIn 0.8s ease-out;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+        }
+
+        .content-card.active { display: block; }
+        
+        h1, h2, h3 { font-family: var(--serif); color: var(--gold); }
+        h1 { font-size: 3rem; margin-bottom: 20px; line-height: 1.2; text-align: center; }
+        h2 { font-size: 2.2rem; border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 15px; margin-top: 40px; }
+        h3 { font-size: 1.5rem; margin-top: 30px; color: #fff; }
+
+        .ppt-slide {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            padding: 35px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .ppt-slide:hover { border-color: var(--gold); background: rgba(255, 255, 255, 0.05); }
+
+        .ppt-slide h3 { color: var(--gold); margin-top: 0; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding-bottom: 10px; }
+        
+        .box { 
+            background: rgba(212, 175, 55, 0.05); 
+            padding: 25px; 
+            border-radius: 4px; 
+            margin: 20px 0; 
+            border-left: 4px solid var(--gold);
+            color: #eee;
+        }
+
+        .relevant-img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 30px 0;
+            border: var(--glass-border);
+        }
+
+        .gold-label { 
+            color: var(--gold); 
+            text-transform: uppercase; 
+            letter-spacing: 5px; 
+            font-size: 0.75rem; 
+            display: block; 
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        ul li { margin-bottom: 10px; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 1100px) {
+            nav { width: 100%; height: auto; position: relative; border-right: none; border-bottom: var(--glass-border); }
+            body { flex-direction: column; }
+            main { margin-left: 0; width: 100%; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h2>Academic Portal</h2>
+        
+        <div class="nav-group">
+            <span class="nav-group-title">PRESENTATION MODE</span>
+            <a onclick="route('home')" class="active">Title & Team</a>
+            <a onclick="route('ppt-content')">Visual Slides</a>
+        </div>
+
+        <div class="nav-group">
+            <span class="nav-group-title">ACADEMIC FULL TEXT</span>
+            <a onclick="route('doc-intro')">Introduction</a>
+            <a onclick="route('doc-achievements')">Achievements</a>
+            <a onclick="route('doc-bridge')">Bridging the Gap</a>
+            <a onclick="route('doc-challenges')">Challenges</a>
+            <a onclick="route('doc-conclusion')">Conclusion</a>
+            <a onclick="route('doc-bib')">Bibliography</a>
+        </div>
+    </nav>
+
+    <main>
+        <section id="home" class="content-card active">
+            <span class="gold-label">Moi University | School of Information Sciences</span>
+            <h1>OPEN ACCESS INITIATIVES: ACHIEVEMENTS, CHALLENGES, AND RECOMMENDATIONS</h1>
+            <div style="text-align: center; margin-bottom: 40px;">
+                <p style="font-family: var(--serif); font-size: 1.5rem; color: var(--gold);">Course Code: INS 214</p>
+            </div>
+            
+            
+            <h3 style="text-align: center; letter-spacing: 3px; text-transform: uppercase; font-size: 1rem; color: var(--gold);">Facilitators / Presentation Team</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                <div class="box"><strong>Julius Mepukori</strong><br>IS/2928/25</div>
+                <div class="box"><strong>John Kibe</strong><br>IS/2886/25</div>
+                <div class="box"><strong>Dennis Ochieng</strong><br>IS/2590/25</div>
+                <div class="box"><strong>Charles Ojung’a Otieno</strong><br>IS/2074/23</div>
+                <div class="box"><strong>Betty Chelagat</strong><br>IS/7284/25</div>
+            </div>
+        </section>
+
+        <section id="ppt-content" class="content-card">
+            <span class="gold-label">Summary Overview</span>
+            <h2>Presentation Summary (Slide-by-Slide)</h2>
+            
+            <div class="ppt-slide">
+                <h3>Slide 1: Introduction</h3>
+                <ul>
+                    <li>Access to research often blocked by costly subscriptions. </li>
+                    <li>Open Access (OA) initiatives promote free, equal access. </li>
+                    <li>Key declarations: Berlin (2003), OECD (2004/2007), EU Commission (2016), IFLA (2004). </li>
+                </ul>
+            </div>
+
+            <div class="ppt-slide">
+                <h3>Slide 2: Berlin Declaration (2003)</h3>
+                <p>The Internet should provide free, irrevocable, worldwide access to scientific knowledge and cultural heritage. </p>
+                <ul>
+                    <li>Free access to research papers. </li>
+                    <li>Support for digital libraries/repositories. </li>
+                    <li>Institutions adopt OA policies. </li>
+                </ul>
+            </div>
+
+            <div class="ppt-slide">
+                <h3>Slide 3: OECD Declarations (2004, 2007)</h3>
+                <p>Publicly funded research data should be openly available for use, reuse, and distribution. </p>
+                <ul>
+                    <li>International data sharing encouraged. </li>
+                    <li>Transparency in science promoted. </li>
+                    <li>Minimal restrictions on research data. </li>
+                </ul>
+            </div>
+
+            <div class="ppt-slide">
+                <h3>Slide 4: European Commission (2016)</h3>
+                <p>All Horizon 2020‑funded research publications must be made openly accessible. </p>
+                <ul>
+                    <li>Removing copyright barriers. </li>
+                    <li>Making research results reusable. </li>
+                    <li>Ensuring public money → public benefit. </li>
+                </ul>
+            </div>
+
+            <div class="ppt-slide">
+                <h3>Slide 5: IFLA Statement (2004)</h3>
+                [cite_start]<p>Removing price and permission barriers so that research documentation is freely available to all. [cite: 1]</p>
+                <ul>
+                    <li>Equal access to knowledge = basic right. </li>
+                    <li>Libraries central to OA movement. </li>
+                </ul>
+            </div>
+
+            <div class="ppt-slide">
+                <h3>Slide 6: Bridging the Gap</h3>
+                <ul>
+                    <li>Democratizes knowledge: equal access for rich & poor institutions. </li>
+                    <li>Enables global teamwork & collaboration. </li>
+                    <li>Supports education with free resources. </li>
+                    <li>Example: COVID‑19 research shared openly, saving lives. </li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="doc-intro" class="content-card">
+            <h2>Introduction (Full Text)</h2>
+            <p>Access to scholarly research has traditionally been restricted by expensive journal subscriptions, creating a divide between those who can afford information and those who cannot. [cite_start]Open access (OA) initiatives emerged to solve this problem by making research freely available online. </p>
+            
+            <div class="box">
+                <p>According to the <strong>Berlin Declaration (2003)</strong>, open access aims to use the Internet as a medium to provide free, irrevocable, and worldwide access to scientific knowledge and cultural heritage. This report discusses the achievements of major OA initiatives, how they bridge the information gap, and the challenges they face. </p>
+            </div>
+        </section>
+
+        <section id="doc-achievements" class="content-card">
+            <h2>(a) Achievements of Open Access Initiatives</h2>
+            <p>Over the past two decades, several declarations have shaped the open access landscape: </p>
+            
+            
+            <h3>1. Berlin Declaration (2003)</h3>
+            <ul>
+                <li>Defined OA as a "comprehensive source of human knowledge." </li>
+                <li>Encouraged researchers to publish work in open access repositories. </li>
+                <li>Led to thousands of institutions worldwide adopting open access policies. </li>
+            </ul>
+
+            <h3>2. OECD Declarations (2004, 2007)</h3>
+            <ul>
+                [cite_start]<li>Emphasized that publicly funded research data should be openly available. </li>
+                [cite_start]<li>Encouraged international collaboration by allowing scientists to share and reuse data. </li>
+                [cite_start]<li>Promoted transparency and efficiency in scientific research. </li>
+            </ul>
+
+            <h3>3. European Commission (2016)</h3>
+            <ul>
+                <li>Mandated that all Horizon 2020-funded research must be openly accessible. </li>
+                <li>Aimed to remove barriers to innovation by making research results reusable for businesses and the public. </li>
+            </ul>
+
+            <h3>4. IFLA Statement (2004)</h3>
+            <ul>
+                <li>Proclaimed that scholarly literature is a basic human right. </li>
+                <li>Positioned libraries as the central hubs for providing free access to information. </li>
+            </ul>
+        </section>
+
+        <section id="doc-bridge" class="content-card">
+            <h2>(b) Bridging the Gap between "Haves" and "Have-nots"</h2>
+            <p>Open access initiatives bridge the divide in several ways: </p>
+            
+            <div class="box">
+                <p><strong>1. Democratizing Knowledge:</strong> Students and researchers in developing countries can access the same high-quality research as those in wealthy universities. </p>
+                <p><strong>2. Global Collaboration:</strong> Scientists from different parts of the world can work together on global issues like climate change or pandemics without being blocked by paywalls. </p>
+                <p><strong>3. Supporting Education:</strong> Teachers and students have access to the latest books and journals, improving the quality of learning. </p>
+                <p><strong>4. Economic Growth:</strong> Small businesses and startups can use research findings to innovate and create new products without paying for expensive journal access. </p>
+            </div>
+            
+            <p><em>Example: During the COVID-19 pandemic, researchers shared their findings openly, which helped in the rapid development of vaccines and treatments worldwide. </em></p>
+        </section>
+
+        <section id="doc-challenges" class="content-card">
+            <h2>(c) Challenges and Recommendations</h2>
+            
+            
+            <div class="ppt-slide">
+                <p><strong>Challenge 1: Funding and Sustainability</strong><br>
+                Journals still need money to operate. Some charge high Article Processing Charges (APCs). <br>
+                <em>Recommendation:</em> Governments and universities should provide funding to cover APCs. </p>
+            </div>
+
+            <div class="ppt-slide">
+                <p><strong>Challenge 2: Unequal Participation</strong><br>
+                Researchers from low-income regions may not afford to publish in OA journals. <br>
+                <em>Recommendation:</em> Publishers should waive fees for researchers from developing nations. </p>
+            </div>
+
+            <div class="ppt-slide">
+                <p><strong>Challenge 3: Quality Concerns</strong><br>
+                The rise of "predatory journals" that publish low-quality work for money. <br>
+                <em>Recommendation:</em> Use tools like the Directory of Open Access Journals (DOAJ) to verify quality. </p>
+            </div>
+
+            <div class="ppt-slide">
+                <p><strong>Challenge 4: Infrastructure Gaps</strong><br>
+                Many small institutions lack the technology to host digital repositories. <br>
+                <em>Recommendation:</em> Create shared national or regional repositories. </p>
+            </div>
+
+            <div class="ppt-slide">
+                <p><strong>Challenge 5: Publisher Resistance</strong><br>
+                Some big publishers still prefer the subscription model. <br>
+                <em>Recommendation:</em> Governments should mandate OA for all research funded by taxpayers. </p>
+            </div>
+
+            <div class="ppt-slide">
+                <p><strong>Challenge 6: Awareness and Training</strong><br>
+                Researchers may fear copyright issues or not know how to share work. <br>
+                <em>Recommendation:</em> Libraries should offer workshops on copyright and Creative Commons licenses. </p>
+            </div>
+        </section>
+
+        <section id="doc-conclusion" class="content-card">
+            <h2>Conclusion</h2>
+            <div class="box">
+                <p>Open access initiatives have achieved major progress by making knowledge free and widely available. They bridge the gap between the information “haves” and “have-nots,” giving equal opportunities to students, researchers, and communities worldwide. However, challenges such as funding, infrastructure, and predatory journals remain. With strong policies, funding support, training, and collaboration, these challenges can be overcome. [cite_start]Open access is not only about science — it is about fairness, inclusion, and global progress. </p>
+            </div>
+        </section>
+
+        <section id="doc-bib" class="content-card">
+            <h2>Bibliography</h2>
+            <ul style="list-style: none; padding: 0;">
+                <li style="margin-bottom: 20px;">Commission, E. (2016). Open access in Horizon 2020. Brussels: European Commission. </li>
+                <li style="margin-bottom: 20px;">IFLA (2004). Statement on Open Access to Scholarly Literature and research Documentation. </li>
+                <li style="margin-bottom: 20px;">OECD. (2007). Principles and Guidelines for Access to Research Data from Public Funding. Paris: OECD Publishing. </li>
+                <li style="margin-bottom: 20px;">Willinsky, J. (2006). The access principle: The case for open access to research and scholarship. Michigan: MIT Press. </li>
+            </ul>
+        </section>
+    </main>
+
+    <script>
+        function route(id) {
+            const sections = document.querySelectorAll('.content-card');
+            sections.forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+
+            const links = document.querySelectorAll('nav a');
+            links.forEach(l => l.classList.remove('active'));
+            
+            // Highlight the clicked link
+            if(event) event.currentTarget.classList.add('active');
+
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Access Study Portal | INS 214</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@200;300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #d4af37;
+            --midnight: #0a0e14;
+            --slate: #161b22;
+            --glass-border: 1px solid rgba(212, 175, 55, 0.3);
+            --text-main: #e0e0e0;
+            --serif: 'Playfair Display', serif;
+            --sans: 'Montserrat', sans-serif;
+            --sidebar-width: 320px;
+        }
+
+        * { box-sizing: border-box; }
+        body, html {
+            margin: 0; padding: 0;
+            font-family: var(--sans);
+            background-color: var(--midnight);
+            color: var(--text-main);
+            display: flex;
+            scroll-behavior: smooth;
+        }
+
+        /* --- SIDEBAR --- */
+        nav {
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: var(--slate);
+            color: white;
+            position: fixed;
+            padding: 30px 20px;
+            overflow-y: auto;
+            z-index: 1000;
+            border-right: var(--glass-border);
+        }
+
+        nav h2 { 
+            font-family: var(--serif); 
+            font-size: 1.2rem; 
+            color: var(--gold);
+            border-bottom: 1px solid var(--gold); 
+            padding-bottom: 15px; 
+            margin-bottom: 30px; 
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .nav-group { margin-bottom: 30px; }
+        .nav-group-title { 
+            font-weight: 700; 
+            color: var(--gold); 
+            font-size: 0.7rem; 
+            margin-bottom: 12px; 
+            display: block; 
+            letter-spacing: 3px;
+            opacity: 0.7;
+        }
+
+        nav a {
+            display: block;
+            color: #ccc;
+            text-decoration: none;
+            padding: 12px 15px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+            transition: 0.3s;
+            cursor: pointer;
+            border-left: 2px solid transparent;
+        }
+
+        nav a:hover, nav a.active { 
+            background: rgba(212, 175, 55, 0.1); 
+            color: var(--gold); 
+            border-left: 2px solid var(--gold);
+        }
+
+        /* --- MAIN CONTENT --- */
+        main {
+            margin-left: var(--sidebar-width);
+            width: calc(100% - var(--sidebar-width));
+            min-height: 100vh;
+            background-image: linear-gradient(rgba(10, 14, 20, 0.9), rgba(10, 14, 20, 0.9)), 
+                              url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=2000&auto=format&fit=crop');
+            background-attachment: fixed;
+            background-size: cover;
+            padding: 60px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .content-card {
+            background: rgba(22, 27, 34, 0.85);
+            backdrop-filter: blur(15px);
+            padding: 60px;
+            border-radius: 4px;
+            border: var(--glass-border);
+            width: 100%;
+            max-width: 1000px;
+            display: none;
+            line-height: 1.8;
+            animation: fadeIn 0.8s ease-out;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+        }
+
+        .content-card.active { display: block; }
+        
+        h1, h2, h3 { font-family: var(--serif); color: var(--gold); }
+        h1 { font-size: 2.8rem; margin-bottom: 20px; line-height: 1.2; text-align: center; }
+        h2 { font-size: 2rem; border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 15px; margin-top: 40px; }
+        h3 { font-size: 1.4rem; margin-top: 30px; color: #fff; }
+
+        .box { 
+            background: rgba(212, 175, 55, 0.05); 
+            padding: 25px; 
+            border-radius: 4px; 
+            margin: 20px 0; 
+            border-left: 4px solid var(--gold);
+            color: #eee;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        th {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .gold-label { 
+            color: var(--gold); 
+            text-transform: uppercase; 
+            letter-spacing: 5px; 
+            font-size: 0.75rem; 
+            display: block; 
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        ul li { margin-bottom: 12px; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 1100px) {
+            nav { width: 100%; height: auto; position: relative; border-right: none; border-bottom: var(--glass-border); }
+            body { flex-direction: column; }
+            main { margin-left: 0; width: 100%; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h2>INS 214 Portal</h2>
+        
+        <div class="nav-group">
+            <span class="nav-group-title">CORE CURRICULUM</span>
+            <a onclick="route('home')" class="active">Title & Overview</a>
+            <a onclick="route('q1-benefits')">Institutional Benefits</a>
+            <a onclick="route('q2-beneficiaries')">Key Beneficiaries</a>
+            <a onclick="route('q3-barriers')">Information Barriers</a>
+            <a onclick="route('q4-government')">Government & Policy</a>
+        </div>
+
+        <div class="nav-group">
+            <span class="nav-group-title">EXAM PREP / QUESTIONS</span>
+            <a onclick="route('exam-q1')">Q1: Key Concepts</a>
+            <a onclick="route('exam-q2')">Q2: Business Models</a>
+            <a onclick="route('exam-q3')">Q3: Software Systems</a>
+            <a onclick="route('exam-q4')">Q4: Current Debates</a>
+            <a onclick="route('exam-q5')">Q5: OA Philosophy</a>
+        </div>
+    </nav>
+
+    <main>
+        <section id="home" class="content-card active">
+            <span class="gold-label">Academic Resource Hub</span>
+            <h1>OPEN ACCESS INITIATIVES: ACHIEVEMENTS, CHALLENGES, AND RECOMMENDATIONS</h1>
+            <div style="text-align: center; margin-bottom: 40px;">
+                <p style="font-family: var(--serif); font-size: 1.5rem; color: var(--gold);">Course Code: INS 214</p>
+            </div>
+            
+            <div class="box">
+                <p> Kama unataka first class soma hii tu😎😁👌😘😍🥲😂. Explore the navigation menu to access specific study modules.</p>
+            </div>
+
+            <h3 style="text-align: center; letter-spacing: 3px; text-transform: uppercase; font-size: 0.9rem; color: var(--gold);">Contributors</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 0.8rem;">
+                <div class="box" style="padding: 10px;">Julius Mepukori - IS/2928/25</div>
+                <div class="box" style="padding: 10px;">John Kibe - IS/2886/25</div>
+                <div class="box" style="padding: 10px;">Dennis Ochieng - IS/2590/25</div>
+                <div class="box" style="padding: 10px;">Charles Ojung’a Otieno - IS/2074/23</div>
+                <div class="box" style="padding: 10px;">Betty Chelagat - IS/7284/25</div>
+            </div>
+        </section>
+
+        <section id="q1-benefits" class="content-card">
+            <h2>How Open Access Benefits Higher Learning</h2>
+            <div class="box">
+                <ul>
+                    <li><strong>Enhanced Research Visibility:</strong> OA increases the reach and citation of institutional research, boosting academic reputation.</li>
+                    <li><strong>Cost Savings:</strong> Reduces reliance on expensive journal subscriptions, freeing up library budgets.</li>
+                    <li><strong>Accelerated Knowledge Sharing:</strong> Facilitates faster dissemination of findings among students, faculty, and global peers.</li>
+                    <li><strong>Improved Collaboration:</strong> Encourages interdisciplinary and international partnerships by removing access barriers.</li>
+                    <li><strong>Student Empowerment:</strong> Provides learners with free access to cutting-edge research, supporting coursework and innovation.</li>
+                    <li><strong>Institutional Prestige:</strong> OA contributions showcase the institution’s intellectual output, attracting funding and talent.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="q2-beneficiaries" class="content-card">
+            <h2>Six Key Beneficiaries of Open Access</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Beneficiary</th>
+                        <th>How They Benefit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Researchers</td><td>Gain wider readership, more citations, and faster feedback on their work.</td></tr>
+                    <tr><td>Students</td><td>Access scholarly materials freely for assignments, theses, and self-learning.</td></tr>
+                    <tr><td>Lecturers</td><td>Use OA resources to enrich teaching materials and stay updated in their fields.</td></tr>
+                    <tr><td>Libraries</td><td>Reduce subscription costs and expand digital collections.</td></tr>
+                    <tr><td>Policy Makers</td><td>Access evidence-based research to inform decisions without paywalls.</td></tr>
+                    <tr><td>General Public</td><td>Learn from scientific findings, improving public understanding and engagement.</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="q3-barriers" class="content-card">
+            <h2>Scenario: Inaccessibility of Information</h2>
+            <div class="box">
+                <p>Imagine a university student in a developing country trying to access a journal article for their thesis. The article is behind a paywall costing <strong>$50</strong>. The institution lacks a subscription, and the student cannot afford the fee. Additionally, the internet connection is unstable, and the article is not available in open repositories.</p>
+            </div>
+            <h3>Contributing Factors to Inaccessibility:</h3>
+            <ul>
+                <li><strong>Economic Barriers:</strong> Costly paywalls.</li>
+                <li><strong>Technological Limitations:</strong> Poor connectivity.</li>
+                <li><strong>Licensing Restrictions:</strong> Closed access policies.</li>
+            </ul>
+        </section>
+
+        <section id="q4-government" class="content-card">
+            <h2>Need for OA in Government Ministries</h2>
+            <div class="box">
+                <ul>
+                    <li><strong>Transparency:</strong> Promotes public trust by making government-funded research and data openly available.</li>
+                    <li><strong>Policy Development:</strong> Ministries can base decisions on accessible, peer-reviewed evidence.</li>
+                    <li><strong>Efficiency:</strong> Reduces duplication of research efforts across departments.</li>
+                    <li><strong>Public Engagement:</strong> Citizens and civil society can participate in informed dialogue and oversight.</li>
+                    <li><strong>Innovation:</strong> Entrepreneurs and developers can use open data to build solutions aligned with national goals.</li>
+                    <li><strong>Inter-Ministerial Collaboration:</strong> OA fosters knowledge sharing across sectors like health, education, and environment.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="exam-q1" class="content-card">
+            <h2>Core Concepts & Examples</h2>
+            
+            <h3>(i) Open Source Definitions</h3>
+            <p>Software whose source code is freely available for use, modification, and distribution. It promotes transparency and innovation. <strong>Example:</strong> Linux OS.</p>
+
+            <h3>(ii) Self-Archiving</h3>
+            <p>The practice where authors deposit a copy of their scholarly work (preprint or postprint) in an open-access repository. <strong>Example:</strong> Uploading an article to arXiv.</p>
+
+            <h3>(iii) Institutional Repositories</h3>
+            <p>Digital platforms managed by academic institutions to collect, preserve, and disseminate scholarly output. <strong>Example:</strong> Kenyatta University’s IR.</p>
+
+            <h3>(iv) Content Management</h3>
+            <p>Organizing, storing, and retrieving digital content using systems like CMS platforms. <strong>Example:</strong> DSpace used for repositories.</p>
+
+            <h3>(v) Digital Repositories</h3>
+            <p>Online databases that store digital content such as research papers, datasets, and multimedia. <strong>Example:</strong> PubMed Central.</p>
+        </section>
+
+        <section id="exam-q2" class="content-card">
+            <h2>Open Access Business Models</h2>
+            
+            <div class="box">
+                <h3>1. Author-Pays Model</h3>
+                <p>Authors pay Article Processing Charges (APCs) to publish. <strong>Challenge:</strong> Excludes researchers from low-income institutions.</p>
+            </div>
+
+            <div class="box">
+                <h3>2. Institutional Funding</h3>
+                <p>Universives or libraries fund OA journals. <strong>Challenge:</strong> Budget constraints and competing priorities.</p>
+            </div>
+
+            <div class="box">
+                <h3>3. Consortia Support</h3>
+                <p>Groups of institutions pool resources to support OA platforms. <strong>Challenge:</strong> Coordination and equitable cost-sharing.</p>
+            </div>
+
+            <div class="box">
+                <h3>4. Advertising Model</h3>
+                <p>Revenue from ads supports OA publishing. <strong>Challenge:</strong> May compromise academic integrity.</p>
+            </div>
+
+            <div class="box">
+                <h3>5. Volunteer/Community Model</h3>
+                <p>Run by volunteers or academic communities. <strong>Challenge:</strong> Sustainability and quality control.</p>
+            </div>
+        </section>
+
+        <section id="exam-q3" class="content-card">
+            <h2>Software Comparisons & Recompenses</h2>
+            <h3>Open Source vs. Proprietary Software</h3>
+            <table>
+                <thead>
+                    <tr><th>Feature</th><th>Open Source</th><th>Proprietary</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Access</td><td>Free source code</td><td>Restricted source code</td></tr>
+                    <tr><td>Cost</td><td>Often free</td><td>Usually paid</td></tr>
+                    <tr><td>Modification</td><td>Allowed</td><td>Not allowed</td></tr>
+                    <tr><td>Example</td><td>Koha</td><td>Microsoft Office</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Benefits in Academic Libraries</h3>
+            <ul>
+                <li><strong>Cost-effective:</strong> Reduces licensing fees.</li>
+                <li><strong>Customizable:</strong> Tailored to library needs.</li>
+                <li><strong>Community Support:</strong> Active developer communities.</li>
+                <li><strong>Interoperability:</strong> Works with multiple systems.</li>
+                <li><strong>Transparency:</strong> Enhances trust and control.</li>
+                <li><strong>Scalability:</strong> Grows with library needs.</li>
+            </ul>
+        </section>
+
+        <section id="exam-q4" class="content-card">
+            <h2>Open Access Initiative & Current Debates</h2>
+            <div class="box">
+                <ul>
+                    <li><strong>Democratization of Knowledge:</strong> OA promotes equitable access to research.</li>
+                    <li><strong>Policy Influence:</strong> Mandates from funders (e.g., Plan S) shape IR strategies.</li>
+                    <li><strong>Technological Advancements:</strong> Tools like OAI-PMH enhance repository interoperability.</li>
+                    <li><strong>Academic Visibility:</strong> OA boosts citation and global reach.</li>
+                    <li><strong>Debates on Quality:</strong> OA challenges traditional peer-review models.</li>
+                    <li><strong>Sustainability Concerns:</strong> Sparks dialogue on funding and long-term viability.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="exam-q5" class="content-card">
+            <h2>Philosophy & Historical Contributions</h2>
+            
+            <h3>Gratis vs. Libre Open Access</h3>
+            <table>
+                <thead>
+                    <tr><th>Type</th><th>Gratis</th><th>Libre</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Access</td><td>Free to read</td><td>Free to read and reuse</td></tr>
+                    <tr><td>Rights</td><td>No copyright change</td><td>Some rights waived (e.g., CC licenses)</td></tr>
+                    <tr><td>Example</td><td>Free PDF online</td><td>CC-BY licensed article</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Significant Contributions</h3>
+            <div class="box">
+                <h4>S. R. Ranganathan (1931)</h4>
+                <p>Proposed the Five Laws of Library Science, emphasizing access and dissemination. He advocated for user-centric library services, which is foundational to OA philosophy.</p>
+            </div>
+            <div class="box">
+                <h4>A. Noruzi (2004)</h4>
+                <p>Linked Ranganathan’s laws to digital environments, promoting OA as a modern extension of library principles and highlighting metadata and interoperability in IRs.</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function route(id) {
+            const sections = document.querySelectorAll('.content-card');
+            sections.forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+
+            const links = document.querySelectorAll('nav a');
+            links.forEach(l => l.classList.remove('active'));
+            
+            // Highlight the clicked link
+            const currentLink = Array.from(document.querySelectorAll('nav a')).find(link => link.getAttribute('onclick').includes(id));
+            if(currentLink) currentLink.classList.add('active');
+
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+    </script>
+</body>
+</html>
